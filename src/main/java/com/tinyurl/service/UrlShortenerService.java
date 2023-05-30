@@ -1,5 +1,6 @@
 package com.tinyurl.service;
 
+import com.tinyurl.Dto.UrlDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,9 @@ public class UrlShortenerService {
     @Autowired
     private IdGeneratorService idGeneratorService;
 
+    @Autowired
+    private UrlService urlService;
+
     private Map<String, String> urlMap = new HashMap<>();
 
     public String generateShortUrl(String longUrl) {
@@ -18,7 +22,9 @@ public class UrlShortenerService {
 
         shortUrl = base62encode(shortUrl);
         // instead persist in db ?
-        urlMap.put(shortUrl, longUrl);
+//       urlMap.put(shortUrl, longUrl);
+
+        urlService.save(new UrlDto(shortUrl, longUrl));
 
         return "tiny.url/" + shortUrl;
     }
@@ -41,10 +47,9 @@ public class UrlShortenerService {
     }
 
     public String getLongUrl(String shortUrl) {
-        if(urlMap.containsKey(shortUrl)){
-            return urlMap.get(shortUrl);
-        }
 
-        return shortUrl +  "does not exist";
+        String longUrl = urlService.findByShortUrl(shortUrl);
+
+        return longUrl;
     }
 }

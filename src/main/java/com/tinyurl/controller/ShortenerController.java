@@ -15,16 +15,20 @@ public class ShortenerController {
     @Autowired
     private UrlShortenerService urlShortenerService;
 
+    @GetMapping("/hello")
+    public String sayHello(){
+        return "Hello world";
+    }
+
     @PostMapping("/shorten")
     public ResponseEntity<Map<String, String>> shortenUrl(@RequestBody Map<String, String> request) {
 
-        String longUrl = request.get("longUrl");
+        String longUrl = request.get("longUrl"); // google.com
         String shortUrl = urlShortenerService.generateShortUrl(longUrl);
 
         Map<String, String> response = new HashMap<>();
         response.put("shortUrl", shortUrl);
 
-//        return ResponseEntity.ok(response);
         return ResponseEntity.ok(response);
     }
 
@@ -33,16 +37,9 @@ public class ShortenerController {
     public ResponseEntity<Map<String, String>> getLongUrl(@RequestBody Map<String, String> request) {
         String longUrl = urlShortenerService.getLongUrl(request.get("shortUrl"));
 
-//        if (longUrl != null) {
-//            Map<String, String> response = new HashMap<>();
-//            response.put("longUrl", longUrl);
-//            return ResponseEntity.ok(response);
-//        }
-
         Map<String, String> response = new HashMap<>();
         response.put("longUrl", longUrl);
 
         return ResponseEntity.ok(response);
-//        return ResponseEntity.notFound().build();
     }
 }

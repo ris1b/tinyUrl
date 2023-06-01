@@ -12,24 +12,25 @@ public class IdGeneratorService {
     @Value("${snowflake.workerId}")
     private Long workerId;
     @Value("${snowflake.dataCentreId}")
-    private Long dataCentreId;
+    private Long dataCenterId;
+    @Value("${snowflake.timeOffset}")
+    private Long timeOffset;
+    @Value("${snowflake.randomSequenceLimit}")
+    private Long randomSequenceLimit;
+    @Value("${snowflake.isUseSystemClock}")
+    private boolean isUseSystemClock;
+
     private Snowflake snowflake;
 
     private synchronized void initializeSnowflake(){
         if(this.snowflake == null){
-//            this.snowflake = new Snowflake(workerId, dataCentreId);
-//            private final long twepoch;
-//            private final long workerId;
-//            private final long dataCenterId;
-//            private final boolean useSystemClock;
-//            this.snowflake = new Snowflake();
 
             Date epochDate = new Date(); // -> epoch date
-            long workerId = 31; // between 0 and 31
-            long dataCenterId = 31; // between 0 and 31
-            boolean isUseSystemClock = true;
-            long timeOffset = 0;
-            long randomSequenceLimit = 4095; // between 0 and 4095
+//            long workerId = 31; // between 0 and 31
+//            long dataCenterId = 31; // between 0 and 31
+//            boolean isUseSystemClock = true;
+//            long timeOffset = 0;
+//            long randomSequenceLimit = 4095; // between 0 and 4095
 
             this.snowflake = new Snowflake(epochDate, workerId, dataCenterId, isUseSystemClock, timeOffset, randomSequenceLimit);
         }

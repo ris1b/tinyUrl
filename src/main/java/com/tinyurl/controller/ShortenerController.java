@@ -33,7 +33,7 @@ public class ShortenerController {
     }
 
 
-    @GetMapping("/shortUrl")
+    @GetMapping("/redirect")
     public ResponseEntity<Map<String, String>> getLongUrl(@RequestBody Map<String, String> request) {
         String longUrl = urlShortenerService.getLongUrl(request.get("shortUrl"));
 

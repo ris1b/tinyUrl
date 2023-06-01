@@ -21,8 +21,6 @@ public class UrlShortenerService {
         String shortUrl = idGeneratorService.generate();
 
         shortUrl = base62encode(shortUrl);
-        // instead persist in db ?
-//       urlMap.put(shortUrl, longUrl);
 
         urlService.save(new UrlDto(shortUrl, longUrl));
 
